@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Бот лояльности клиники - демо</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f1f3f2;--ink:#141716;--mut:#535b58;--c:#0f8f7e;--c2:#e6f4f1;--m:clamp(16px,2.4vw,36px);--ease:cubic-bezier(.2,.8,.2,1)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font:400 17px/1.55 "Golos Text",system-ui,sans-serif;overflow-x:hidden}
+.wrap{max-width:1180px;margin:0 auto;padding:0 var(--m)}
+header{padding:26px 0 0;color:var(--mut);font-size:14px}
+h1{font:700 clamp(32px,5vw,62px)/1.02 "Golos Text";letter-spacing:-.035em;margin:30px 0 14px;max-width:17ch}
+.lead{max-width:60ch;color:#2b302e;font-size:18px}
+h2{font:700 clamp(26px,3.2vw,40px)/1.1 "Golos Text";letter-spacing:-.03em;margin-bottom:12px}
+.main{display:grid;grid-template-columns:390px 1fr;gap:clamp(24px,4vw,60px);margin-top:40px;align-items:start}
+.phone{background:#151617;padding:12px;border-radius:30px;position:sticky;top:20px}
+.scr{border-radius:20px;overflow:hidden;height:680px;display:flex;flex-direction:column;background:var(--c2);transition:background .5s}
+.top{background:#fff;padding:12px 14px;display:flex;align-items:center;gap:10px}
+.ava{width:38px;height:38px;border-radius:50%;background:var(--c);color:#fff;display:grid;place-items:center;font-weight:700;transition:background .5s}
+.top b{display:block;font-size:15px}.top small{color:var(--mut);font-size:13px}
+.msgs{flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:8px}
+.b{max-width:88%;padding:10px 12px;border-radius:14px;font-size:14px;line-height:1.45;background:#fff;align-self:flex-start;border-bottom-left-radius:4px;animation:pop .35s var(--ease) both}
+.b.me{align-self:flex-end;background:var(--c);color:#fff;border-radius:14px;border-bottom-right-radius:4px}
+.b a{color:var(--c);word-break:break-all}
+.tier{display:flex;gap:4px;margin-top:8px}
+.tier span{flex:1;height:6px;border-radius:3px;background:#e2e6e4}
+.tier span.on{background:var(--c)}
+@keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.kb{padding:8px;display:grid;grid-template-columns:1fr 1fr;gap:6px;background:#fff}
+.kb button{border:0;border-radius:10px;padding:11px 6px;background:var(--c);color:#fff;font:600 13px "Golos Text";cursor:pointer;transition:transform .15s,filter .2s,background .5s}
+.kb button:hover{filter:brightness(1.08)}.kb button:active{transform:scale(.97)}
+.kb button.w{grid-column:1/-1}
+.panel{display:grid;gap:22px}
+.card{background:#fff;padding:22px}
+.card h3{font:700 19px "Golos Text";margin-bottom:6px}
+.card p{color:#2b302e;font-size:16px}
+.brands{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.brands button{border:2px solid transparent;background:var(--bg);padding:10px 14px;font:600 15px "Golos Text";cursor:pointer;display:flex;gap:8px;align-items:center;transition:border-color .2s}
+.brands button i{width:14px;height:14px;border-radius:50%}
+.brands button.on{border-color:var(--ink)}
+.field{margin-top:12px}
+.field label{display:block;font-size:14px;color:var(--mut);margin-bottom:4px}
+.field input{width:100%;padding:11px 12px;border:1.5px solid #d7dcda;font:500 16px "Golos Text";background:#fff}
+.field input:focus{outline:2px solid var(--c);border-color:var(--c)}
+.flow{list-style:none;display:grid;gap:8px;margin-top:10px}
+.flow li{display:flex;gap:10px;align-items:baseline;font-size:16px}
+.flow b{min-width:92px;color:var(--c);transition:color .5s}
+.price{margin-top:clamp(70px,9vw,120px);background:var(--ink);color:#fff;padding:clamp(50px,7vw,90px) 0}
+.price .big{font:700 clamp(30px,4.4vw,56px) "Golos Text";letter-spacing:-.03em}
+.price p{color:#c5cbc8;margin-top:8px;max-width:62ch}
+footer{padding:24px 0 40px;color:var(--mut);font-size:14px}
+@media(max-width:900px){.main{grid-template-columns:1fr}.phone{position:static;max-width:390px}.scr{height:600px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>Демо к задаче: бот лояльности и рекомендаций для клиники в MAX</header>
+<h1>Один бот - для любой клиники вашей сети</h1>
+<p class="lead">Нажимайте кнопки бота слева. Справа смените клинику или впишите своё название - бот сразу перекрасится и заговорит от её имени. Так работает «белая метка»: копия под новую клинику без программиста.</p>
+
+<div class="main">
+ <div class="phone"><div class="scr">
+  <div class="top"><div class="ava" id="ava">Л</div><div><b id="bn">Клиника</b><small>Бот</small></div></div>
+  <div class="msgs" id="msgs"></div>
+  <div class="kb" id="kb"></div>
+ </div></div>
+
+ <div class="panel">
+  <div class="card"><h3>Клиника</h3><p>Название, цвет и тексты берутся из настроек.</p>
+   <div class="brands" id="brands"></div>
+   <div class="field"><label for="nm">Или впишите своё название</label><input id="nm" placeholder="Например: Стоматология «Улыбка»"></div>
+  </div>
+  <div class="card"><h3>Что происходит за кнопками</h3>
+   <ul class="flow">
+    <li><b>Мои бонусы</b><span>баланс и статус из базы бонусов, срок сгорания</span></li>
+    <li><b>Мои записи</b><span>ближайшие приёмы пациента из IDENT</span></li>
+    <li><b>Записаться</b><span>заявка падает в amoCRM, администратор подтверждает</span></li>
+    <li><b>Рекомендовать</b><span>личная ссылка start=ref…, баллы обоим после первого визита</span></li>
+    <li><b>Отзыв</b><span>текст и оценка в amoCRM, бонусные баллы за отзыв</span></li>
+   </ul></div>
+  <div class="card"><h3>Правила программы - в таблице</h3><p>Проценты списания по статусам, приветственные баллы, бонус за рекомендацию и срок сгорания меняет администратор, без правки кода.</p></div>
+ </div>
+</div>
+</div>
+<section class="price"><div class="wrap">
+ <div class="big">70 000 ₽ · 7 дней с правками</div>
+ <p>Бот в MAX с бонусами, статусами, реферальной программой, интеграциями IDENT и amoCRM и белой меткой под клиники сети. Работа через Безопасную сделку.</p>
+</div></section>
+<div class="wrap"><footer>Демо с условными данными: клиники, пациент и баллы вымышлены.</footer></div>
+
+<script>
+const BR=[{n:'Лайт Дент',c:'#0f8f7e',c2:'#e6f4f1'},{n:'Белый Клык',c:'#2f5bd3',c2:'#e9eefb'},{n:'Семейная стоматология',c:'#b0476b',c2:'#f8eaf0'}];
+let cur=BR[0],bal=3800,tier=1;
+const msgs=document.getElementById('msgs'),kb=document.getElementById('kb');
+const TIERS=['Бронза · 3%','Серебро · 5%','Золото · 7%','Платина · 10%'];
+function apply(b){cur=b;const r=document.documentElement.style;r.setProperty('--c',b.c);r.setProperty('--c2',b.c2);document.getElementById('bn').textContent=b.n;document.getElementById('ava').textContent=b.n[0];
+ document.querySelectorAll('#brands button').forEach(x=>x.classList.toggle('on',x.dataset.n===b.n));restart()}
+document.getElementById('brands').innerHTML=BR.map(b=>`<button type="button" data-n="${b.n}"><i style="background:${b.c}"></i>${b.n}</button>`).join('');
+document.getElementById('brands').addEventListener('click',e=>{const x=e.target.closest('button');if(x)apply(BR.find(b=>b.n===x.dataset.n))});
+let tmr;document.getElementById('nm').addEventListener('input',e=>{clearTimeout(tmr);tmr=setTimeout(()=>{const v=e.target.value.trim();if(v)apply({n:v,c:cur.c,c2:cur.c2})},400)});
+function bot(h){const d=document.createElement('div');d.className='b';d.innerHTML=h;msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight}
+function me(t){const d=document.createElement('div');d.className='b me';d.textContent=t;msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight}
+const ref='ref'+Math.random().toString(16).slice(2,10);
+const A={
+ 'Мои бонусы':()=>bot(`На вашем счёте <b>${bal.toLocaleString('ru-RU')} баллов</b>. 1 балл = 1 ₽.<br>Ваш статус: <b>${TIERS[tier]}</b> от суммы счёта.<div class="tier">${TIERS.map((_,i)=>`<span class="${i<=tier?'on':''}"></span>`).join('')}</div><br>Баллы сгорят через 270 дней.`),
+ 'Мои записи':()=>bot('Ближайший приём: <b>14 ноября, 10:30</b>, терапевт.<br>Напомню за день до визита.'),
+ 'Записаться':()=>bot('Выберите направление и удобное время - администратор подтвердит запись в течение 15 минут.'),
+ 'Рекомендовать':()=>{bot(`Спасибо, что рекомендуете «${cur.n}»! Перешлите это сообщение другу:`);bot(`Записываюсь в «${cur.n}» и советую вам. По ссылке - 500 приветственных баллов: <a href="#">max.ru/clinic_bot?start=${ref}</a>`);bot('Когда друг придёт на первый приём, вам начислим <b>2 000 баллов</b>.')},
+ 'Оставить отзыв':()=>{bot('Оцените последний визит - за отзыв начислим <b>500 баллов</b>.');setTimeout(()=>{bal+=500;bot('Отзыв получен, +500 баллов. Спасибо!')},900)},
+ 'О клинике':()=>bot(`«${cur.n}» - адрес, часы работы и врачи берутся из настроек клиники.`)
+};
+function keys(){kb.innerHTML='';Object.keys(A).forEach((k,i)=>{const b=document.createElement('button');b.type='button';b.textContent=k;if(i===0)b.className='w';b.onclick=()=>{me(k);setTimeout(A[k],300)};kb.appendChild(b)})}
+function restart(){msgs.innerHTML='';bot(`Здравствуйте, Анна! Это бот клиники «${cur.n}». Здесь можно проверить бонусы, записаться на приём и порекомендовать нас близким.`);keys()}
+apply(BR[0]);
+</script>
+</body>
+</html>
