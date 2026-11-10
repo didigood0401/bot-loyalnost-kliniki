@@ -19,8 +19,8 @@ h1{font:800 clamp(30px,4.4vw,56px)/1.02 "Golos Text";letter-spacing:-.04em;max-w
 .play:hover{transform:translateY(-2px)}.play:disabled{opacity:.6;cursor:default}
 .sys{display:grid;grid-template-columns:320px minmax(0,1fr) minmax(0,1fr);gap:14px;margin:26px 0 20px;align-items:start}
 .panel{background:var(--s1);border-radius:22px;padding:16px;position:relative}
-.panel h3{font:700 14px "Golos Text";color:var(--mut);margin-bottom:12px;display:flex;align-items:center;gap:8px}
-.panel h3 i{width:10px;height:10px;border-radius:3px;background:var(--k)}
+.panel .ph-t{font:700 14px "Golos Text";color:var(--mut);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.panel .ph-t i{width:10px;height:10px;border-radius:3px;background:var(--k)}
 /* phone */
 .ph{background:#000;border-radius:34px;padding:9px}
 .scr{background:var(--c2);color:#0f2a25;border-radius:26px;height:520px;display:flex;flex-direction:column;overflow:hidden}
@@ -70,9 +70,9 @@ footer{color:var(--mut);font-size:14px;padding-bottom:40px}
 <header><div><h1>Одна запись - три системы, без ручной работы</h1><p class="lead">Премиум-демо: нажмите «Запустить» и посмотрите, как запись пациента из бота в MAX сама попадает в amoCRM и в расписание IDENT, а пациенту приходит напоминание.</p></div><button class="play" id="play" type="button">▶ Запустить сценарий</button></header>
 <div class="flow" id="flow"><span class="step">1. Пациент в боте</span><span class="step">2. Заявка в amoCRM</span><span class="step">3. Запись в IDENT</span><span class="step">4. Напоминание и бонусы</span></div>
 <div class="sys">
- <div class="panel"><h3><i style="--k:var(--c)"></i>Бот клиники · MAX</h3><div class="ph"><div class="scr"><div class="tb"><div class="av">Л</div><div><b>Лайт Дент</b><small>бот</small></div></div><div class="msgs" id="msgs"></div></div></div></div>
- <div class="panel"><h3><i style="--k:var(--amo)"></i>amoCRM · воронка «Запись»</h3><div class="funnel"><div class="col" id="c1"><b>Новая заявка</b><div class="lead-card old">Мария К.<small>Чистка · вчера</small></div></div><div class="col" id="c2"><b>Записан</b><div class="lead-card old">Олег П.<small>Терапевт · 12.11</small></div></div><div class="col" id="c3"><b>Пришёл</b><div class="lead-card old">Ирина С.<small>+500 баллов</small></div></div></div><div class="toast" id="t1"></div></div>
- <div class="panel"><h3><i style="--k:var(--id)"></i>IDENT · расписание на 14 ноября</h3><div class="sched" id="sched"></div><div class="toast" id="t2"></div></div>
+ <div class="panel"><h2 class="ph-t"><i style="--k:var(--c)"></i>Бот клиники · MAX</h2><div class="ph"><div class="scr"><div class="tb"><div class="av">Л</div><div><b>Лайт Дент</b><small>бот</small></div></div><div class="msgs" id="msgs"></div></div></div></div>
+ <div class="panel"><h2 class="ph-t"><i style="--k:var(--amo)"></i>amoCRM · воронка «Запись»</h2><div class="funnel"><div class="col" id="c1"><b>Новая заявка</b><div class="lead-card old">Мария К.<small>Чистка · вчера</small></div></div><div class="col" id="c2"><b>Записан</b><div class="lead-card old">Олег П.<small>Терапевт · 12.11</small></div></div><div class="col" id="c3"><b>Пришёл</b><div class="lead-card old">Ирина С.<small>+500 баллов</small></div></div></div><div class="toast" id="t1"></div></div>
+ <div class="panel"><h2 class="ph-t"><i style="--k:var(--id)"></i>IDENT · расписание на 14 ноября</h2><div class="sched" id="sched"></div><div class="toast" id="t2"></div></div>
 </div>
 
 <section>
